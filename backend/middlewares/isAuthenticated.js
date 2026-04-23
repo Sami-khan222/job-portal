@@ -21,5 +21,6 @@ const isAuthenticated = async (req, res, next) => {
     } catch (error) {
         console.log(error);
     }
+    console.log("TOKEN:", req.cookies.token);
 }
 export default isAuthenticated;
