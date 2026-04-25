@@ -29,25 +29,27 @@ const FilterCard = () => {
         dispatch(setSearchedQuery(selectedValue));
     },[selectedValue]);
     return (
-        <div className='w-full bg-white p-3 rounded-md'>
-            <h1 className='font-bold text-lg'>Filter Jobs</h1>
-            <hr className='mt-3' />
+        <div className='w-full bg-white p-3 sm:p-4 rounded-md'>
+            <h1 className='font-bold text-base sm:text-lg'>Filter Jobs</h1>
+            <hr className='mt-2 sm:mt-3' />
             <RadioGroup value={selectedValue} onValueChange={changeHandler}>
                 {
                     fitlerData.map((data, index) => (
-                        <div>
-                            <h1 className='font-bold text-lg'>{data.fitlerType}</h1>
-                            {
-                                data.array.map((item, idx) => {
-                                    const itemId = `id${index}-${idx}`
-                                    return (
-                                        <div className='flex items-center space-x-2 my-2'>
-                                            <RadioGroupItem value={item} id={itemId} />
-                                            <Label htmlFor={itemId}>{item}</Label>
-                                        </div>
-                                    )
-                                })
-                            }
+                        <div key={index} className='mb-4 sm:mb-6'>
+                            <h1 className='font-bold text-base sm:text-lg mb-2 sm:mb-3'>{data.fitlerType}</h1>
+                            <div className='grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-1 gap-2 sm:gap-3'>
+                                {
+                                    data.array.map((item, idx) => {
+                                        const itemId = `id${index}-${idx}`
+                                        return (
+                                            <div className='flex items-center space-x-2 my-1 sm:my-2' key={itemId}>
+                                                <RadioGroupItem value={item} id={itemId} />
+                                                <Label htmlFor={itemId} className="text-sm sm:text-base cursor-pointer">{item}</Label>
+                                            </div>
+                                        )
+                                    })
+                                }
+                            </div>
                         </div>
                     ))
                 }

@@ -21,48 +21,62 @@ const Profile = () => {
     return (
         <div>
             <Navbar />
-            <div className='max-w-4xl mx-auto bg-white border border-gray-200 rounded-2xl my-5 p-8'>
-                <div className='flex justify-between'>
-                    <div className='flex items-center gap-4'>
-                        <Avatar className="h-24 w-24">
+            <div className='max-w-4xl mx-auto bg-white border border-gray-200 rounded-2xl my-5 p-4 sm:p-6 md:p-8 mx-4 sm:mx-auto'>
+                <div className='flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 sm:gap-0'>
+                    <div className='flex items-center gap-3 sm:gap-4'>
+                        <Avatar className="h-16 w-16 sm:h-20 sm:w-20 md:h-24 md:w-24">
                             <AvatarImage src="https://www.shutterstock.com/image-vector/circle-line-simple-design-logo-600nw-2174926871.jpg" alt="profile" />
                         </Avatar>
                         <div>
-                            <h1 className='font-medium text-xl'>{user?.fullname}</h1>
-                            <p>{user?.profile?.bio}</p>
+                            <h1 className='font-medium text-lg sm:text-xl'>{user?.fullname}</h1>
+                            <p className='text-sm sm:text-base'>{user?.profile?.bio}</p>
                         </div>
                     </div>
-                    <Button onClick={() => setOpen(true)} className="text-right" variant="outline"><Pen /></Button>
+                    <Button onClick={() => setOpen(true)} className="text-right w-full sm:w-auto" variant="outline">
+                        <Pen className="h-4 w-4 sm:h-5 sm:w-5" />
+                    </Button>
                 </div>
-                <div className='my-5'>
-                    <div className='flex items-center gap-3 my-2'>
-                        <Mail />
-                        <span>{user?.email}</span>
+                
+                <div className='my-5 space-y-2'>
+                    <div className='flex items-center gap-2 sm:gap-3 my-2'>
+                        <Mail className="h-4 w-4 sm:h-5 sm:w-5" />
+                        <span className='text-sm sm:text-base break-all'>{user?.email}</span>
                     </div>
-                    <div className='flex items-center gap-3 my-2'>
-                        <Contact />
-                        <span>{user?.phoneNumber}</span>
+                    <div className='flex items-center gap-2 sm:gap-3 my-2'>
+                        <Contact className="h-4 w-4 sm:h-5 sm:w-5" />
+                        <span className='text-sm sm:text-base'>{user?.phoneNumber}</span>
                     </div>
                 </div>
+                
                 <div className='my-5'>
-                    <h1>Skills</h1>
-                    <div className='flex items-center gap-1'>
+                    <h1 className='text-base sm:text-lg font-semibold mb-2'>Skills</h1>
+                    <div className='flex flex-wrap items-center gap-1 sm:gap-2'>
                         {
-                            user?.profile?.skills.length !== 0 ? user?.profile?.skills.map((item, index) => <Badge key={index}>{item}</Badge>) : <span>NA</span>
+                            user?.profile?.skills?.length !== 0 ? user?.profile?.skills.map((item, index) => <Badge key={index} className="text-xs sm:text-sm">{item}</Badge>) : <span className="text-sm text-gray-500">NA</span>
                         }
                     </div>
                 </div>
+                
                 <div className='grid w-full max-w-sm items-center gap-1.5'>
-                    <Label className="text-md font-bold">Resume</Label>
+                    <Label className="text-sm sm:text-md font-bold">Resume</Label>
                     {
-                        isResume ? <a target='blank' href={user?.profile?.resume} className='text-blue-500 w-full hover:underline cursor-pointer'>{user?.profile?.resumeOriginalName}</a> : <span>NA</span>
+                        isResume ? (
+                            <a target='_blank' rel="noopener noreferrer" href={user?.profile?.resume} className='text-blue-500 w-full hover:underline cursor-pointer text-sm sm:text-base break-all'>
+                                {user?.profile?.resumeOriginalName}
+                            </a>
+                        ) : (
+                            <span className="text-sm text-gray-500">NA</span>
+                        )
                     }
                 </div>
             </div>
-            <div className='max-w-4xl mx-auto bg-white rounded-2xl'>
-                <h1 className='font-bold text-lg my-5'>Applied Jobs</h1>
+            
+            <div className='max-w-4xl mx-auto bg-white rounded-2xl px-4 sm:px-6 md:px-0'>
+                <h1 className='font-bold text-base sm:text-lg my-5'>Applied Jobs</h1>
                 {/* Applied Job Table   */}
-                <AppliedJobTable />
+                <div className="overflow-x-auto">
+                    <AppliedJobTable />
+                </div>
             </div>
             <UpdateProfileDialog open={open} setOpen={setOpen}/>
         </div>

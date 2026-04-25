@@ -2,7 +2,7 @@ import React from 'react'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
 import { Button } from '../ui/button'
 import { Avatar, AvatarImage } from '../ui/avatar'
-import { LogOut, User2 } from 'lucide-react'
+import { LogOut, User2, Menu, X } from 'lucide-react'
 import { Link, useNavigate } from 'react-router-dom'
 import { useDispatch, useSelector } from 'react-redux'
 import axios from 'axios'
@@ -14,6 +14,7 @@ const Navbar = () => {
     const { user } = useSelector(store => store.auth);
     const dispatch = useDispatch();
     const navigate = useNavigate();
+    const [isMobileMenuOpen, setIsMobileMenuOpen] = React.useState(false);
 
     const logoutHandler = async () => {
         try {
@@ -28,13 +29,20 @@ const Navbar = () => {
             toast.error(error.response.data.message);
         }
     }
+
+    const toggleMobileMenu = () => {
+        setIsMobileMenuOpen(!isMobileMenuOpen);
+    }
+
     return (
         <div className='bg-white'>
-            <div className='flex items-center justify-between mx-auto max-w-7xl h-16'>
+            <div className='flex items-center justify-between mx-auto max-w-7xl h-16 px-4 sm:px-6 lg:px-8'>
                 <div>
                     <h1 className='text-2xl font-bold'>Next<span className='text-[#0000ff]'>Hire</span></h1>
                 </div>
-                <div className='flex items-center gap-12'>
+                
+                {/* Desktop Navigation */}
+                <div className='hidden md:flex items-center gap-12'>
                     <ul className='flex font-medium items-center gap-5'>
                         {
                             user && user.role === 'recruiter' ? (
@@ -50,8 +58,6 @@ const Navbar = () => {
                                 </>
                             )
                         }
-
-
                     </ul>
                     {
                         !user ? (
@@ -86,7 +92,6 @@ const Navbar = () => {
                                                     </div>
                                                 )
                                             }
-
                                             <div className='flex w-fit items-center gap-2 cursor-pointer'>
                                                 <LogOut />
                                                 <Button onClick={logoutHandler} variant="link">Logout</Button>
@@ -97,10 +102,71 @@ const Navbar = () => {
                             </Popover>
                         )
                     }
+                </div>
 
+                {/* Mobile Menu Button */}
+                <div className='md:hidden flex items-center'>
+                    <Button variant="ghost" size="icon" onClick={toggleMobileMenu}>
+                        {isMobileMenuOpen ? <X className="h-5 w-5" /> : <Menu className="h-5 w-5" />}
+                    </Button>
                 </div>
             </div>
 
+            {/* Mobile Navigation Menu */}
+            {isMobileMenuOpen && (
+                <div className='md:hidden bg-white border-t border-gray-200 py-4 px-4 sm:px-6 lg:px-8'>
+                    <ul className='flex flex-col font-medium gap-4 mb-4'>
+                        {
+                            user && user.role === 'recruiter' ? (
+                                <>
+                                    <li onClick={() => setIsMobileMenuOpen(false)}><Link to="/admin/companies">Companies</Link></li>
+                                    <li onClick={() => setIsMobileMenuOpen(false)}><Link to="/admin/jobs">Jobs</Link></li>
+                                </>
+                            ) : (
+                                <>
+                                    <li onClick={() => setIsMobileMenuOpen(false)}><Link to="/">Home</Link></li>
+                                    <li onClick={() => setIsMobileMenuOpen(false)}><Link to="/jobs">Jobs</Link></li>
+                                    <li onClick={() => setIsMobileMenuOpen(false)}><Link to="/browse">Browse</Link></li>
+                                </>
+                            )
+                        }
+                    </ul>
+                    {
+                        !user ? (
+                            <div className='flex flex-col gap-2'>
+                                <Link to="/login" onClick={() => setIsMobileMenuOpen(false)}><Button variant="outline" className="w-full">Login</Button></Link>
+                                <Link to="/signup" onClick={() => setIsMobileMenuOpen(false)}><Button className="bg-[#0000ff] hover:bg-[#1134a6] w-full">Signup</Button></Link>
+                            </div>
+                        ) : (
+                            <div className='space-y-3'>
+                                <div className='flex items-center gap-3 pb-3 border-b border-gray-200'>
+                                    <Avatar className="cursor-pointer">
+                                        <AvatarImage src={user?.profile?.profilePhoto} alt="@shadcn" />
+                                    </Avatar>
+                                    <div>
+                                        <h4 className='font-medium'>{user?.fullname}</h4>
+                                        <p className='text-sm text-muted-foreground'>{user?.profile?.bio}</p>
+                                    </div>
+                                </div>
+                                <div className='flex flex-col gap-2'>
+                                    {
+                                        user && user.role === 'student' && (
+                                            <div className='flex w-full items-center gap-2 cursor-pointer' onClick={() => setIsMobileMenuOpen(false)}>
+                                                <User2 className="h-4 w-4" />
+                                                <Button variant="link" className="justify-start px-0"> <Link to="/profile">View Profile</Link></Button>
+                                            </div>
+                                        )
+                                    }
+                                    <div className='flex w-full items-center gap-2 cursor-pointer'>
+                                        <LogOut className="h-4 w-4" />
+                                        <Button onClick={logoutHandler} variant="link" className="justify-start px-0">Logout</Button>
+                                    </div>
+                                </div>
+                            </div>
+                        )
+                    }
+                </div>
+            )}
         </div>
     )
 }

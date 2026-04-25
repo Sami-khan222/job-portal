@@ -8,10 +8,10 @@ const ProtectedRoute = ({children}) => {
     const navigate = useNavigate();
 
     useEffect(()=>{
-        if(user === null || user.role !== 'recruiter'){
+        if(user === null || user?.role !== 'recruiter'){
             navigate("/");
         }
-    },[]);
+    }, [user, navigate]); // Added dependencies to fix React warning
 
     return (
         <>

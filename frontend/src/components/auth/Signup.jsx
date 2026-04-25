@@ -70,8 +70,8 @@ const Signup = () => {
     return (
         <div>
             <Navbar />
-            <div className='flex items-center justify-center max-w-7xl mx-auto'>
-                <form onSubmit={submitHandler} className='w-1/2 border border-gray-200 rounded-md p-4 my-10'>
+            <div className='flex items-center justify-center max-w-7xl mx-auto px-4 sm:px-6 lg:px-8'>
+                <form onSubmit={submitHandler} className='w-full sm:w-3/4 md:w-1/2 lg:w-1/2 xl:w-1/3 border border-gray-200 rounded-md p-4 sm:p-6 my-4 sm:my-6 md:my-10'>
                     <h1 className='font-bold text-xl mb-5'>Sign Up</h1>
                     <div className='my-2'>
                         <Label>Full Name</Label>
@@ -113,7 +113,7 @@ const Signup = () => {
                             placeholder="enter your password"
                         />
                     </div>
-                    <div className='flex items-center justify-between'>
+                    <div className='flex flex-col md:flex-row items-start md:items-center justify-between gap-4 md:gap-0'>
                         <RadioGroup className="flex items-center gap-4 my-5">
                             <div className="flex items-center space-x-2">
                                 <Input
@@ -138,13 +138,13 @@ const Signup = () => {
                                 <Label htmlFor="r2">Recruiter</Label>
                             </div>
                         </RadioGroup>
-                        <div className='flex items-center gap-2'>
-                            <Label>Profile</Label>
+                        <div className='flex flex-col sm:flex-row items-start sm:items-center gap-2 w-full md:w-auto'>
+                            <Label className="whitespace-nowrap">Profile</Label>
                             <Input
                                 accept="image/*"
                                 type="file"
                                 onChange={changeFileHandler}
-                                className="cursor-pointer"
+                                className="cursor-pointer w-full sm:w-auto"
                             />
                         </div>
                     </div>

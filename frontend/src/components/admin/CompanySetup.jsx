@@ -77,67 +77,85 @@ const CompanySetup = () => {
     return (
         <div>
             <Navbar />
-            <div className='max-w-xl mx-auto my-10'>
+            <div className='max-w-xl mx-auto my-6 sm:my-10 px-4 sm:px-6 lg:px-8'>
                 <form onSubmit={submitHandler}>
-                    <div className='flex items-center gap-5 p-8'>
-                        <Button onClick={() => navigate("/admin/companies")} variant="outline" className="flex items-center gap-2 text-gray-500 font-semibold">
-                            <ArrowLeft />
-                            <span>Back</span>
+                    <div className='flex items-center gap-3 sm:gap-5 p-4 sm:p-8'>
+                        <Button 
+                            onClick={() => navigate("/admin/companies")} 
+                            variant="outline" 
+                            className="flex items-center gap-2 text-gray-500 font-semibold"
+                        >
+                            <ArrowLeft className="h-4 w-4 sm:h-5 sm:w-5" />
+                            <span className="hidden sm:inline">Back</span>
                         </Button>
-                        <h1 className='font-bold text-xl'>Company Setup</h1>
+                        <h1 className='font-bold text-lg sm:text-xl'>Company Setup</h1>
                     </div>
-                    <div className='grid grid-cols-2 gap-4'>
+                    <div className='grid grid-cols-1 md:grid-cols-2 gap-4'>
                         <div>
-                            <Label>Company Name</Label>
+                            <Label className="text-sm sm:text-base">Company Name</Label>
                             <Input
                                 type="text"
                                 name="name"
                                 value={input.name}
                                 onChange={changeEventHandler}
+                                className="mt-1 sm:mt-2"
                             />
                         </div>
                         <div>
-                            <Label>Description</Label>
+                            <Label className="text-sm sm:text-base">Description</Label>
                             <Input
                                 type="text"
                                 name="description"
                                 value={input.description}
                                 onChange={changeEventHandler}
+                                className="mt-1 sm:mt-2"
                             />
                         </div>
                         <div>
-                            <Label>Website</Label>
+                            <Label className="text-sm sm:text-base">Website</Label>
                             <Input
                                 type="text"
                                 name="website"
                                 value={input.website}
                                 onChange={changeEventHandler}
+                                className="mt-1 sm:mt-2"
+                                placeholder="https://example.com"
                             />
                         </div>
                         <div>
-                            <Label>Location</Label>
+                            <Label className="text-sm sm:text-base">Location</Label>
                             <Input
                                 type="text"
                                 name="location"
                                 value={input.location}
                                 onChange={changeEventHandler}
+                                className="mt-1 sm:mt-2"
+                                placeholder="City, Country"
                             />
                         </div>
-                        <div>
-                            <Label>Logo</Label>
+                        <div className="md:col-span-2">
+                            <Label className="text-sm sm:text-base">Logo</Label>
                             <Input
                                 type="file"
                                 accept="image/*"
                                 onChange={changeFileHandler}
+                                className="mt-1 sm:mt-2 cursor-pointer"
                             />
                         </div>
                     </div>
                     {
-                        loading ? <Button className="w-full my-4"> <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please wait </Button> : <Button type="submit" className="w-full my-4">Update</Button>
+                        loading ? (
+                            <Button className="w-full my-4 sm:my-6 bg-[#0000ff] hover:bg-[#1134a6]" disabled>
+                                <Loader2 className='mr-2 h-4 w-4 animate-spin' /> Please wait
+                            </Button>
+                        ) : (
+                            <Button type="submit" className="w-full my-4 sm:my-6 bg-[#0000ff] hover:bg-[#1134a6]">
+                                Update
+                            </Button>
+                        )
                     }
                 </form>
             </div>
-
         </div>
     )
 }
