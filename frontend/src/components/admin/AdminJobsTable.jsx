@@ -2,6 +2,7 @@ import React, { useEffect, useState } from 'react'
 import { Table, TableBody, TableCaption, TableCell, TableHead, TableHeader, TableRow } from '../ui/table'
 import { Avatar, AvatarImage } from '../ui/avatar'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/popover'
+import { Button } from '../ui/button'  // ← THIS IMPORT WAS MISSING
 import { Edit2, Eye, MoreHorizontal } from 'lucide-react'
 import { useSelector } from 'react-redux'
 import { useNavigate } from 'react-router-dom'
@@ -31,10 +32,10 @@ const AdminJobsTable = () => {
                 </TableCaption>
                 <TableHeader>
                     <TableRow>
-                        <TableHead className="text-xs sm:text-sm">Company Name</TableHead>
-                        <TableHead className="text-xs sm:text-sm">Role</TableHead>
-                        <TableHead className="text-xs sm:text-sm">Date</TableHead>
-                        <TableHead className="text-right text-xs sm:text-sm">Action</TableHead>
+                        <TableHead className="text-xs sm:text-sm whitespace-nowrap">Company Name</TableHead>
+                        <TableHead className="text-xs sm:text-sm whitespace-nowrap">Role</TableHead>
+                        <TableHead className="text-xs sm:text-sm whitespace-nowrap">Date</TableHead>
+                        <TableHead className="text-right text-xs sm:text-sm whitespace-nowrap">Action</TableHead>
                     </TableRow>
                 </TableHeader>
                 <TableBody>
@@ -57,7 +58,7 @@ const AdminJobsTable = () => {
                                                 <MoreHorizontal className="h-4 w-4" />
                                             </Button>
                                         </PopoverTrigger>
-                                        <PopoverContent className="w-28 sm:w-32 p-2">
+                                        <PopoverContent className="w-24 sm:w-32 p-2">
                                             <div 
                                                 onClick={()=> navigate(`/admin/companies/${job._id}`)} 
                                                 className='flex items-center gap-2 w-full cursor-pointer p-2 hover:bg-muted rounded-md transition-colors'
